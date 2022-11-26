@@ -7,7 +7,7 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import ReactHowler from "react-howler";
 import { display } from "@mui/system";
 
-export default function Main() {
+function Main({ choosen }) {
   const [data, setData] = useState([]);
   const [hero, setHero] = useState(null);
   const [count, setCount] = useState(0);
@@ -16,21 +16,22 @@ export default function Main() {
     setData(data.filter((obj) => obj.id !== hero.id));
   };
   useEffect(() => {
+    setHero(choosen);
     // console.log("main useeffect");
-    fetch("api/heros")
-      .then((res) => res.json())
-      .then((data) => data.data)
-      .then((data) => {
-        console.log("data=", data);
-        const rand = Math.round(Math.random() * (data.length - 1));
-        const choosen = data[rand];
-        console.log("choosen on is " + choosen.hebrew);
-        console.log("data", data);
-        setHero(choosen);
-        // setRunSayName(true);
-      })
-      .catch((err) => console.log("ERR=", err));
-  }, [data]);
+    // fetch("api/heros")
+    //   .then((res) => res.json())
+    //   .then((data) => data.data)
+    //   .then((data) => {
+    //     console.log("data=", data);
+    //     const rand = Math.round(Math.random() * (data.length - 1));
+    //     const choosen = data[rand];
+    //     console.log("choosen on is " + choosen.hebrew);
+    //     console.log("data", data);
+    //     setHero(choosen);
+    //     // setRunSayName(true);
+    //   })
+    //   .catch((err) => console.log("ERR=", err));
+  }, [choosen]);
 
   return (
     <div className="main-app">
@@ -69,3 +70,22 @@ export default function Main() {
     </div>
   );
 }
+
+export async function getServerSideProps() {
+  console.log("HI");
+  fetch("api/heros")
+    .then((res) => res.json())
+    .then((data) => data.data)
+    .then((data) => {
+      console.log("data=", data);
+      const rand = Math.round(Math.random() * (data.length - 1));
+      const choosen = data[rand];
+      console.log("choosen on is " + choosen.hebrew);
+      console.log("data", data);
+      // setHero(choosen);
+    })
+    .catch((err) => console.log("ERR=", err));
+  return { props: { choosen } };
+}
+
+export default Main;

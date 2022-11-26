@@ -12,25 +12,28 @@
 }
 .letter {
   width: 50px;
-  /* height: 80px; */
-  display: inline-block;
-  padding: 10px;
+  height: 80px;
+  /* display: inline-block; */
+  /* padding: 10px; */
   border: 1px solid rgb(244, 197, 197);
   margin: 10px;
   cursor: pointer;
   font-size: 50px;
-  box-shadow: 5px 5px 5px rgb(244, 197, 197);
+  /* box-shadow: 5px 5px 5px rgb(244, 197, 197); */
 }
 .board .letter:hover {
-  box-shadow: 5px 5px 5px rgb(252, 225, 19);
+  box-shadow: 5px 5px 5px #fce113;
   border: 1px solid rgb(244, 197, 197);
 }
 .board {
   margin-top: 1%;
+  display: flex;
+  justify-content: center;
 }
 .progress {
   margin-top: 1%;
-  display: inline-flex;
+  display: flex;
   -webkit-flex-direction: row-reverse;
   flex-direction: row-reverse;
+  justify-content: center;
 }

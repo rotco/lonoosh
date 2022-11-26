@@ -58,9 +58,9 @@ export default function Board({ hero, removeHero }) {
       {progress && (
         <div>
           {console.log(progress)}
-          <div className="board">
+          <div>
             {shuffledLetters && (
-              <div>
+              <div className="board">
                 {shuffledLetters.map((ch, i) => {
                   if (!ch.completed)
                     return (
