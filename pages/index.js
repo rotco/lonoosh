@@ -8,6 +8,7 @@ import SayName from "../components/SayName";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import ReactHowler from "react-howler";
 import { display } from "@mui/system";
+import IconButton from "@mui/material/IconButton";
 
 function Home({ data }) {
   const [hero, setHero] = useState(null);
@@ -50,9 +51,15 @@ function Home({ data }) {
               justifyContent: "center",
             }}
           >
-            <div onClick={() => setRunSayName(true)}>
-              <CampaignIcon style={{ fontSize: "50px", color: "red" }} />
-            </div>
+            <IconButton onClick={() => setRunSayName(true)}>
+              <CampaignIcon
+                style={{
+                  fontSize: "50px",
+                  color: "#af1f1f",
+                  variant: "outlined",
+                }}
+              />
+            </IconButton>
             <img src={hero.imageurl} height="400"></img>
           </div>
           <Board hero={hero} removeHero={removeHero} />

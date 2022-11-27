@@ -14,10 +14,13 @@ export default function Board({ hero, removeHero }) {
   const [playGood] = useSound("/assets/sounds/good1.mp4");
   function incScore() {
     context.setScoreContext(context.scoreContext + 1);
+    context.setActionContext("inc");
     playGood();
   }
   function decScore() {
     context.setScoreContext(context.scoreContext - 1);
+    context.setActionContext("dec");
+
     playBad();
   }
   useEffect(() => {
