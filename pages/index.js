@@ -9,6 +9,7 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import ReactHowler from "react-howler";
 import { display } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
+import axios from "axios";
 
 function Home({ data }) {
   const [hero, setHero] = useState(null);
@@ -75,13 +76,10 @@ function Home({ data }) {
     </div>
   );
 }
+export default Home;
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/heros");
-  const tempData = await res.json();
-  const data = tempData.data;
-
+  const res = await axios.get("http://127.0.0.1:3000/api/heros");
+  const data = await res.data.data;
   return { props: { data } };
 }
-
-export default Home;
