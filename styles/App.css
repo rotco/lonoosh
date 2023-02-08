@@ -1,6 +1,6 @@
 .main-app {
   text-align: center;
-  margin-top: 1%;
+  /* margin-top: 1%; */
 }
 .score {
   font-size: 40px;
@@ -36,4 +36,12 @@
   -webkit-flex-direction: row-reverse;
   flex-direction: row-reverse;
   justify-content: center;
+}
+.alona-banner {
+  position: absolute;
+  z-index: -2;
+  opacity: 0.5;
+}
+body {
+  margin: 0px;
 }

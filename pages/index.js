@@ -10,6 +10,7 @@ import ReactHowler from "react-howler";
 import { display } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
+import Image from "next/image";
 
 function Home({ data }) {
   const [hero, setHero] = useState(null);
@@ -35,6 +36,15 @@ function Home({ data }) {
 
   return (
     <div className="main-app">
+      <div class="alona-banner">
+        <Image
+          src="/assets/alona.jpg"
+          alt="alona image"
+          width={800 / 4}
+          height={598 / 4}
+        />
+      </div>
+
       <WinningVideo />
       <Score />
       {/* <div className="score">
