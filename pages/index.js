@@ -79,7 +79,7 @@ function Home({ data }) {
 export default Home;
 
 export async function getServerSideProps() {
-  const res = await axios.get("http://127.0.0.1/api/heros");
+  const res = await axios.get("https://lonoosh.vercel.app/api/heros");
   const data = await res.data.data;
   return { props: { data } };
 }
