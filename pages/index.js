@@ -37,12 +37,7 @@ function Home({ data }) {
   return (
     <div className="main-app">
       <div class="alona-banner">
-        <Image
-          src="/assets/alona.jpg"
-          alt="alona image"
-          width={800 / 4}
-          height={598 / 4}
-        />
+        <span>Alona Games</span>
       </div>
 
       <WinningVideo />

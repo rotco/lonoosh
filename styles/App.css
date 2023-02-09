@@ -39,8 +39,11 @@
 }
 .alona-banner {
   position: absolute;
-  z-index: -2;
-  opacity: 0.5;
+  padding-left: 1rem;
+  font-size: 2rem;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: blueviolet;
+  text-shadow: 2px 2px 2px #a7a279cd;
 }
 body {
   margin: 0px;
