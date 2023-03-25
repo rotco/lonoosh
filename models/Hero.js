@@ -19,6 +19,10 @@ const HeroSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please specify the hero's audio file name"],
   },
+  type: {
+    type: String,
+    required: [true, "Please specify the hero's type"],
+  },
 });
 
 export default mongoose.models.Hero || mongoose.model("Hero", HeroSchema);
