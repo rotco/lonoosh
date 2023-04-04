@@ -11,80 +11,43 @@ import { display } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 
 function Home({ data }) {
-  const [hero, setHero] = useState(null);
-  const [runSayName, setRunSayName] = useState(false);
-  const removeHero = () => {
-    console.log("removeHero, data = ", data);
-    console.log("hero = ", hero);
-    data = data.filter((obj) => obj._id !== hero._id);
-    chooseHero();
-  };
-  const chooseHero = () => {
-    console.log("chooseHero");
-    const rand = Math.round(Math.random() * (data.length - 1));
-    const choosen = data[rand];
-    setHero(choosen);
-    console.log("choosen = ", data[rand]);
-  };
+  const [games, setGames] = useState([]);
+
   useEffect(() => {
     console.log("USEEFFECT INDEX");
-    console.log("data=", data);
-    chooseHero();
-  }, []);
+    setGames(data);
+    console.log("games=", games);
+    // chooseHero();
+  }, [games, data]);
 
   return (
     <div className="main-app">
-      <div class="alona-banner">
+      <div className="alona-banner">
         <span>Alona Games</span>
       </div>
-
-      <WinningVideo />
-      <Score />
-      {/* <div className="score">
-        <span className="number">{count}</span> נקודות
-      </div> */}
-
-      {hero && (
-        <div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              alignContent: "center",
-              textAlign: "center",
-              justifyContent: "center",
-            }}
-          >
-            <IconButton onClick={() => setRunSayName(true)}>
-              <CampaignIcon
-                style={{
-                  fontSize: "50px",
-                  color: "#af1f1f",
-                  variant: "outlined",
-                }}
-              />
-            </IconButton>
-            <img src={hero.imageurl} height="400"></img>
-          </div>
-          <Board hero={hero} removeHero={removeHero} />
-          {runSayName && (
-            <SayName
-              audioFile={hero.audioFile}
-              runSayName={runSayName}
-              setRunSayName={setRunSayName}
-            />
-          )}
-        </div>
-      )}
+      <div className="games-cards">
+        {games.length > 0 &&
+          games.map((game) => {
+            return (
+              <div className="game-card">
+                <Link href={`/games/name/${game.endpoint}`}>
+                  <div>{game.name}</div>
+                </Link>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
 export default Home;
 
 export async function getServerSideProps() {
-  const res = await axios.get("https://alona.vercel.app/api/heros");
+  const res = await axios.get("http://localhost:3000/api/games");
   const data = await res.data.data;
+  console.log("data:", data);
   return { props: { data } };
 }

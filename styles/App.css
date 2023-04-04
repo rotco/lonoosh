@@ -38,13 +38,22 @@
   justify-content: center;
 }
 .alona-banner {
-  position: absolute;
-  padding-left: 1rem;
   font-size: 2rem;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: blueviolet;
   text-shadow: 2px 2px 2px #a7a279cd;
+  padding: 1rem;
 }
+.games-cards {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.game-card {
+  border: 1px solid grey;
+  padding: 10px;
+}
+
 body {
   margin: 0px;
 }
