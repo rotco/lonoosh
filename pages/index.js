@@ -30,10 +30,16 @@ function Home({ data }) {
       </div>
       <div className="games-cards">
         {games.length > 0 &&
-          games.map((game) => {
+          games.map((game, index) => {
             return (
-              <div className="game-card">
-                <Link href={`/games/name/${game.endpoint}`}>
+              <div key={index} className="game-card">
+                {/* <Link href={`/games/name/${game.endpoint}`}> */}
+                <Link
+                  href={{
+                    pathname: "/games/commongame",
+                    query: { endpoint: game.endpoint },
+                  }}
+                >
                   <div>{game.name}</div>
                 </Link>
               </div>

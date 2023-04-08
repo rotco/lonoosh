@@ -1,16 +1,18 @@
-import styles from "../styles/Home.module.css";
-import Score from "../../../components/score";
-import Board from "../../../components/board";
+import styles from "../../styles/Home.module.css";
+
+import Score from "../../components/score";
+import Board from "../../components/board";
 
 import { useState, useEffect, useCallback } from "react";
-import WinningVideo from "../../../components/winningVideo";
-import SayName from "../../../components/SayName";
+import WinningVideo from "../../components/winningVideo";
+import SayName from "../../components/SayName";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import ReactHowler from "react-howler";
 import { display } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Image from "next/image";
+import { MissingChar } from "../../utils/game";
 
 function Home({ data }) {
   const [hero, setHero] = useState(null);
@@ -36,7 +38,7 @@ function Home({ data }) {
 
   return (
     <div className="main-app">
-      <div class="alona-banner">
+      <div className="alona-banner">
         <span>Alona Games</span>
       </div>
 
@@ -83,8 +85,28 @@ function Home({ data }) {
 }
 export default Home;
 
-export async function getServerSideProps() {
-  const res = await axios.get("https://alona.vercel.app/api/heros");
-  const data = await res.data.data;
+export async function getServerSideProps(context) {
+  console.log("context.query", context.query);
+
+  // const res = await axios.get("https://alona.vercel.app/api/heros");
+  const res = await axios.get(
+    `http://localhost:3000/api/games/name/${context.query.endpoint}`
+  );
+
+  const getGame = () => {
+    if (context.query.endpoint === "missingchar") {
+      return new MissingChar();
+    }
+  };
+  const game = getGame();
+  await game.run();
+  const data = {
+    collection: game.collection,
+    completeCards: game.completeCards,
+    currentCards: game.currentCards,
+    missingChar: game.missingChar,
+    optionalCards: game.optionalCards,
+    players: game.players,
+  };
   return { props: { data } };
 }

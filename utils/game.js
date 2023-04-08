@@ -55,12 +55,13 @@ class Game {
     this.score += num;
     return this.score;
   }
-  setCollection(collection) {
-    this.collection = collection;
+  async setCollection(collection) {
+    const res = await axios.get(`${process.env.BE_SERVER}/api/heros`);
+    this.collection = res.data.data;
   }
 }
 
-class MissingChar extends Game {
+export class MissingChar extends Game {
   constructor() {
     super();
     this.missingChar = null;
@@ -93,9 +94,15 @@ class MissingChar extends Game {
       }
     }
   }
+  async run() {
+    await this.setCollection();
+    this.selectRandomHero();
+    this.setCurrentCards();
+    this.setOptionalCards();
+  }
 }
 
-class MissingVowel extends Game {
+export class MissingVowel extends Game {
   constructor() {
     super();
     this.missingVowel = null;
@@ -140,22 +147,22 @@ class MissingVowel extends Game {
     }
   }
 }
-const run = async () => {
-  // const mcGame = new MissingChar();
-  // mcGame.selectRandomHero();
-  // mcGame.setCurrentCards();
-  // mcGame.setOptionalCards();
-  // console.log(mcGame.currentCards);
-  // console.log(mcGame.completeCards);
-  // console.log(mcGame.optionalCards);
+// const run = async () => {
+//   // const mcGame = new MissingChar();
+//   // mcGame.selectRandomHero();
+//   // mcGame.setCurrentCards();
+//   // mcGame.setOptionalCards();
+//   // console.log(mcGame.currentCards);
+//   // console.log(mcGame.completeCards);
+//   // console.log(mcGame.optionalCards);
 
-  const mvGame = new MissingVowel();
-  mvGame.setCollection(collection);
-  await mvGame.selectRandomHero();
-  mvGame.setCurrentCards();
-  mvGame.setOptionalCards();
-  console.log(mvGame.currentCards);
-  console.log(mvGame.completeCards);
-  console.log(mvGame.optionalCards);
-};
-run();
+//   const mvGame = new MissingVowel();
+//   mvGame.setCollection(collection);
+//   await mvGame.selectRandomHero();
+//   mvGame.setCurrentCards();
+//   mvGame.setOptionalCards();
+//   console.log(mvGame.currentCards);
+//   console.log(mvGame.completeCards);
+//   console.log(mvGame.optionalCards);
+// };
+// run();
