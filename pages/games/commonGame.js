@@ -88,11 +88,6 @@ export default Home;
 export async function getServerSideProps(context) {
   console.log("context.query", context.query);
 
-  // const res = await axios.get("https://alona.vercel.app/api/heros");
-  const res = await axios.get(
-    `http://localhost:3000/api/games/name/${context.query.endpoint}`
-  );
-
   const getGame = () => {
     if (context.query.endpoint === "missingchar") {
       return new MissingChar();
