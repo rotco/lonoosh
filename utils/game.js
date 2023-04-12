@@ -50,6 +50,7 @@ class Game {
     this.optionalCards = [];
     this.numOfOptionalChars = 4;
     this.collection = [];
+    this.hero = null;
   }
   updateScore(num) {
     this.score += num;
@@ -68,8 +69,8 @@ export class MissingChar extends Game {
   }
 
   selectRandomHero() {
-    const hero = this.collection[parseInt(Math.random() * collection.length)];
-    this.completeCards = hero["hebrew"].split("");
+    this.hero = this.collection[parseInt(Math.random() * collection.length)];
+    this.completeCards = this.hero["hebrew"].split("");
   }
 
   setCurrentCards() {
@@ -109,8 +110,8 @@ export class ShuffledCharacters extends Game {
   }
 
   selectRandomHero() {
-    const hero = this.collection[parseInt(Math.random() * collection.length)];
-    this.completeCards = hero["hebrew"].split("");
+    this.hero = this.collection[parseInt(Math.random() * collection.length)];
+    this.completeCards = this.hero["hebrew"].split("");
   }
 
   setCurrentCards() {
@@ -150,9 +151,9 @@ export class MissingVowel extends Game {
   }
 
   async selectRandomHero() {
-    const hero =
+    this.hero =
       this.collection[parseInt(Math.random() * this.collection.length)];
-    const vowlName = await getVowels(hero["hebrew"]);
+    const vowlName = await getVowels(this.hero["hebrew"]);
     console.log("vowlName:", vowlName);
 
     // const regex = /([\u0591-\u05BD\u05BF-\u05C7]*[\u05D0-\u05EA])/g;
