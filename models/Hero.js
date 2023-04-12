@@ -17,7 +17,7 @@ const HeroSchema = new mongoose.Schema({
   },
   audioFile: {
     type: String,
-    required: [true, "Please specify the hero's audio file name"],
+    required: [false, "Please specify the hero's audio file name"],
   },
   type: {
     type: String,

@@ -68,8 +68,49 @@ export class MissingChar extends Game {
   }
 
   selectRandomHero() {
-    const hero = collection[parseInt(Math.random() * collection.length)];
-    this.completeCards = hero["hebName"].split("");
+    const hero = this.collection[parseInt(Math.random() * collection.length)];
+    this.completeCards = hero["hebrew"].split("");
+  }
+
+  setCurrentCards() {
+    this.currentCards = [...this.completeCards];
+    const missingCharIndex = parseInt(Math.random() * this.currentCards.length);
+    this.missingChar = this.currentCards[missingCharIndex];
+    this.currentCards[missingCharIndex] = null;
+  }
+  setOptionalCards() {
+    let count = 0;
+    this.optionalCards = new Array(this.numOfOptionalChars);
+    while (count < this.numOfOptionalChars) {
+      const i = parseInt(Math.random() * allChars.length);
+      const j = parseInt(Math.random() * this.numOfOptionalChars);
+      if (!(allChars[i] in this.optionalCards) && !this.optionalCards[j]) {
+        count += 1;
+        if (count == 1) {
+          this.optionalCards[j] = this.missingChar;
+        } else {
+          this.optionalCards[j] = allChars[i];
+        }
+      }
+    }
+  }
+  async run() {
+    await this.setCollection();
+    this.selectRandomHero();
+    this.setCurrentCards();
+    this.setOptionalCards();
+  }
+}
+
+export class ShuffledCharacters extends Game {
+  constructor() {
+    super();
+    this.missingChar = null;
+  }
+
+  selectRandomHero() {
+    const hero = this.collection[parseInt(Math.random() * collection.length)];
+    this.completeCards = hero["hebrew"].split("");
   }
 
   setCurrentCards() {
@@ -111,7 +152,7 @@ export class MissingVowel extends Game {
   async selectRandomHero() {
     const hero =
       this.collection[parseInt(Math.random() * this.collection.length)];
-    const vowlName = await getVowels(hero["hebName"]);
+    const vowlName = await getVowels(hero["hebrew"]);
     console.log("vowlName:", vowlName);
 
     // const regex = /([\u0591-\u05BD\u05BF-\u05C7]*[\u05D0-\u05EA])/g;

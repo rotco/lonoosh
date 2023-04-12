@@ -18,18 +18,17 @@ export default async function handler(req, res) {
     case "POST":
       try {
         console.log("BODY:", req.body);
-        const file = await speechSynth(req.body.name);
-        if (file.success) {
+        if (["pokemon", "superhero"].includes(req.body.type)) {
+          const file = await speechSynth(req.body.name);
+          if (!file.success) throw "could not create file";
           req.body.audioFile = file.id;
-          const hero = await Hero.create(req.body);
-          res.status(201).json({ success: true, data: hero });
-        } else {
-          throw "could not create file";
         }
+        const hero = await Hero.create(req.body);
+        res.status(201).json({ success: true, data: hero });
       } catch (error) {
         res.status(400).json({
           success: false,
-          message: `could not create new Hero with given Body - ${req.body}`,
+          message: `could not create new Hero with given Body - ${req.body}, error - ${error}`,
         });
       }
       break;

@@ -12,7 +12,7 @@ import { display } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Image from "next/image";
-import { MissingChar } from "../../utils/game";
+import { MissingChar, ShuffledCharacters } from "../../utils/game";
 
 function Home({ data }) {
   const [hero, setHero] = useState(null);
@@ -20,15 +20,15 @@ function Home({ data }) {
   const removeHero = () => {
     console.log("removeHero, data = ", data);
     console.log("hero = ", hero);
-    data = data.filter((obj) => obj._id !== hero._id);
+    data.collection = data.collection.filter((obj) => obj._id !== hero._id);
     chooseHero();
   };
   const chooseHero = () => {
     console.log("chooseHero");
-    const rand = Math.round(Math.random() * (data.length - 1));
-    const choosen = data[rand];
+    const rand = Math.round(Math.random() * (data.collection.length - 1));
+    const choosen = data.collection[rand];
     setHero(choosen);
-    console.log("choosen = ", data[rand]);
+    console.log("choosen = ", data.collection[rand]);
   };
   useEffect(() => {
     console.log("USEEFFECT INDEX");
@@ -44,9 +44,6 @@ function Home({ data }) {
 
       <WinningVideo />
       <Score />
-      {/* <div className="score">
-        <span className="number">{count}</span> נקודות
-      </div> */}
 
       {hero && (
         <div>
@@ -91,6 +88,9 @@ export async function getServerSideProps(context) {
   const getGame = () => {
     if (context.query.endpoint === "missingchar") {
       return new MissingChar();
+    }
+    if (context.query.endpoint === "shufflecharacters") {
+      return new ShuffledCharacters();
     }
   };
   const game = getGame();

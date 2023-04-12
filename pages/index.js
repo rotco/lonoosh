@@ -26,21 +26,29 @@ function Home({ data }) {
   return (
     <div className="main-app">
       <div className="alona-banner">
-        <span>Alona Games</span>
+        <Image
+          src="/assets/images/alona_games_logo_320.jpg"
+          width={200}
+          height={217}
+        ></Image>
       </div>
       <div className="games-cards">
         {games.length > 0 &&
           games.map((game, index) => {
             return (
               <div key={index} className="game-card">
-                {/* <Link href={`/games/name/${game.endpoint}`}> */}
                 <Link
                   href={{
                     pathname: "/games/commongame",
                     query: { endpoint: game.endpoint },
                   }}
                 >
-                  <div>{game.name}</div>
+                  <Image
+                    src={"/assets/images/" + game.imageurl}
+                    width={400}
+                    height={400}
+                  ></Image>
+                  <div className="label">{game.hebrew}</div>
                 </Link>
               </div>
             );
