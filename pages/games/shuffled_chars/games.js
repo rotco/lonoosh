@@ -1,5 +1,5 @@
 import styles from "../styles/Home.module.css";
-import Score from "../../../components/score";
+import Score from "../../../components/Score";
 import Board from "../../../components/board";
 
 import { useState, useEffect, useCallback } from "react";

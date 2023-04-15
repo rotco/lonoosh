@@ -41,7 +41,7 @@ const getVowels = async (word) => {
   return res.data.data[0].nakdan.options[0].w;
 };
 
-class Game {
+export class Game {
   constructor() {
     this.score = 0;
     this.players = [];
@@ -63,47 +63,6 @@ class Game {
 }
 
 export class MissingChar extends Game {
-  constructor() {
-    super();
-    this.missingChar = null;
-  }
-
-  selectRandomHero() {
-    this.hero = this.collection[parseInt(Math.random() * collection.length)];
-    this.completeCards = this.hero["hebrew"].split("");
-  }
-
-  setCurrentCards() {
-    this.currentCards = [...this.completeCards];
-    const missingCharIndex = parseInt(Math.random() * this.currentCards.length);
-    this.missingChar = this.currentCards[missingCharIndex];
-    this.currentCards[missingCharIndex] = null;
-  }
-  setOptionalCards() {
-    let count = 0;
-    this.optionalCards = new Array(this.numOfOptionalChars);
-    while (count < this.numOfOptionalChars) {
-      const i = parseInt(Math.random() * allChars.length);
-      const j = parseInt(Math.random() * this.numOfOptionalChars);
-      if (!(allChars[i] in this.optionalCards) && !this.optionalCards[j]) {
-        count += 1;
-        if (count == 1) {
-          this.optionalCards[j] = this.missingChar;
-        } else {
-          this.optionalCards[j] = allChars[i];
-        }
-      }
-    }
-  }
-  async run() {
-    await this.setCollection();
-    this.selectRandomHero();
-    this.setCurrentCards();
-    this.setOptionalCards();
-  }
-}
-
-export class ShuffledCharacters extends Game {
   constructor() {
     super();
     this.missingChar = null;

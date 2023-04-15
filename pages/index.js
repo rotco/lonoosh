@@ -1,5 +1,5 @@
 import styles from "../styles/Home.module.css";
-import Score from "../components/score";
+import Score from "../components/Score";
 import Board from "../components/board";
 
 import { useState, useEffect, useCallback } from "react";
@@ -12,26 +12,18 @@ import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import PageHead from "../components/PageHead";
 
 function Home({ data }) {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    console.log("USEEFFECT INDEX");
     setGames(data);
-    console.log("games=", games);
-    // chooseHero();
   }, [games, data]);
 
   return (
     <div className="main-app">
-      <div className="alona-banner">
-        <Image
-          src="/assets/images/alona_games_logo_320.jpg"
-          width={200}
-          height={217}
-        ></Image>
-      </div>
+      <PageHead />
       <div className="games-cards">
         {games.length > 0 &&
           games.map((game, index) => {

@@ -4,10 +4,11 @@ import useSound from "use-sound";
 // import bad1 from "../public/assets/sounds/bad1.mp4";
 // import good1 from "../public/assets/sounds/good1.mp4";
 
-export default function Board({ hero, removeHero }) {
-  const [progress, setProgress] = useState();
+export default function Board({ hero, removeHero, game }) {
+  const [currentCards, setCurrentCards] = useState();
   const [progressIndex, setProgressIndex] = useState(0);
-  const [shuffledLetters, setShuffledLetters] = useState(null);
+  const [optionalCards, setOptionalCards] = useState(null);
+  const [requiredCard, setRequiredCard] = useState(null);
   const [completeBoard, setCompleteBoard] = useState(false);
   const context = useContext(AppContext);
   const [playBad] = useSound("/assets/sounds/bad1.mp4");
@@ -24,53 +25,48 @@ export default function Board({ hero, removeHero }) {
     playBad();
   }
   useEffect(() => {
-    setProgress([...Array(hero.hebrew.length)]);
+    setCurrentCards([...Array(hero.hebrew.length)]);
     setProgressIndex(0);
-    let tempShuffledLetters = [...Array(hero.hebrew.length)];
-    hero.hebrew.split("").forEach((letter) => {
-      while (true) {
-        const rand = Math.round(
-          Math.random() * (hero.hebrew.split("").length - 1)
-        );
-        if (tempShuffledLetters[rand] === undefined) {
-          tempShuffledLetters[rand] = { value: letter, completed: false };
-          break;
-        }
-      }
-      setCompleteBoard(false);
-      setShuffledLetters(tempShuffledLetters);
-    });
+    setCompleteBoard(false);
+    console.log("board hero=", hero);
+    const [optional, required] = game.initCards(hero);
+    console.log("optional", optional);
+    console.log("required", required);
+    setOptionalCards(optional);
+    setRequiredCard(required);
   }, [hero.hebrew]);
-  const handleClickLetter = (ch) => {
-    if (ch.value === hero.hebrew[progressIndex]) {
-      let tempArray = progress;
+  const handleClickLetter = (userSelectedCardIndex) => {
+    const checkMove = game.checkMove(
+      optionalCards,
+      currentCards,
+      requiredCard,
+      hero,
+      userSelectedCardIndex
+    );
+    console.log("checkMove", checkMove);
+    setOptionalCards(checkMove.nextMoveOptionalCards);
+    setRequiredCard(checkMove.nextMoveRequiredCard);
+    setCompleteBoard(checkMove.isComplete);
+    if (checkMove.correctMove) {
       incScore();
-      tempArray[progressIndex] = ch.value;
-      ch.completed = true;
-      setProgress(tempArray);
-      if (hero.hebrew.length === progressIndex + 1) {
-        setCompleteBoard(true);
-      }
-      setProgressIndex(progressIndex + 1);
     } else {
       decScore();
     }
   };
   return (
     <div>
-      {progress && (
+      {currentCards && (
         <div>
-          {console.log(progress)}
           <div>
-            {shuffledLetters && (
+            {optionalCards && (
               <div className="board">
-                {shuffledLetters.map((ch, i) => {
+                {optionalCards.map((ch, i) => {
                   if (!ch.completed)
                     return (
                       <div
                         className="letter"
                         key={i}
-                        onClick={() => handleClickLetter(ch)}
+                        onClick={() => handleClickLetter(i)}
                       >
                         {ch.value}
                       </div>
@@ -80,7 +76,7 @@ export default function Board({ hero, removeHero }) {
             )}
           </div>
           <div className="progress">
-            {progress.map((ch, i) => {
+            {currentCards.map((ch, i) => {
               return (
                 <div className="letter" key={i}>
                   {ch}

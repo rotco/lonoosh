@@ -1,6 +1,6 @@
 import styles from "../../styles/Home.module.css";
 
-import Score from "../../components/score";
+import Score from "../../components/Score";
 import Board from "../../components/board";
 
 import { useState, useEffect, useCallback } from "react";
@@ -12,36 +12,45 @@ import { display } from "@mui/system";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Image from "next/image";
-import { MissingChar, ShuffledCharacters } from "../../utils/game";
+import { ShuffledCharacters } from "../../utils/ShuffledCharacters";
+import PageHead from "../../components/PageHead";
 
 function Home({ data }) {
   const [hero, setHero] = useState(null);
+  const [game, setGame] = useState(null);
   const [runSayName, setRunSayName] = useState(false);
+  const chooseHero = (tempGame) => {
+    console.log("chooseHero");
+    console.log("game in chooseHero=", tempGame);
+    const rand = Math.round(Math.random() * (data.collection.length - 1));
+    const choosen = data.collection[rand];
+    setHero(choosen);
+    console.log("choosen = ", data.collection[rand]);
+  };
+  const getGame = (gameName) => {
+    console.log("gameName=", gameName);
+    if (gameName === "shuffledcharacters") return new ShuffledCharacters();
+  };
   const removeHero = () => {
     console.log("removeHero, data = ", data);
     console.log("hero = ", hero);
     data.collection = data.collection.filter((obj) => obj._id !== hero._id);
     chooseHero();
   };
-  const chooseHero = () => {
-    console.log("chooseHero");
-    const rand = Math.round(Math.random() * (data.collection.length - 1));
-    const choosen = data.collection[rand];
-    setHero(choosen);
-    console.log("choosen = ", data.collection[rand]);
-  };
+
   useEffect(() => {
     console.log("USEEFFECT INDEX");
     console.log("data=", data);
-    chooseHero();
+    const tempGame = getGame(data.gameName);
+    setGame(tempGame);
+    console.log("tempGame = ", tempGame);
+
+    chooseHero(tempGame);
   }, []);
 
   return (
     <div className="main-app">
-      <div className="alona-banner">
-        <span>Alona Games</span>
-      </div>
-
+      <PageHead />
       <WinningVideo />
       <Score />
 
@@ -49,14 +58,19 @@ function Home({ data }) {
         <div>
           <div
             style={{
-              display: "flex",
+              // display: "flex",
               alignItems: "center",
               alignContent: "center",
               textAlign: "center",
               justifyContent: "center",
             }}
           >
-            <IconButton onClick={() => setRunSayName(true)}>
+            <IconButton
+              onClick={() => setRunSayName(true)}
+              style={{
+                position: "absolute",
+              }}
+            >
               <CampaignIcon
                 style={{
                   fontSize: "50px",
@@ -65,9 +79,9 @@ function Home({ data }) {
                 }}
               />
             </IconButton>
-            <img src={hero.imageurl} height="400"></img>
+            <Image src={hero.imageurl} height={400} width={400} />
           </div>
-          <Board hero={hero} removeHero={removeHero} />
+          <Board hero={hero} removeHero={removeHero} game={game} />
           {runSayName && (
             <SayName
               audioFile={hero.audioFile}
@@ -85,23 +99,27 @@ export default Home;
 export async function getServerSideProps(context) {
   console.log("context.query", context.query);
 
-  const getGame = () => {
-    if (context.query.endpoint === "missingchar") {
-      return new MissingChar();
-    }
-    if (context.query.endpoint === "shufflecharacters") {
-      return new ShuffledCharacters();
-    }
+  // const getGame = () => {
+  //   if (context.query.endpoint === "missingchar") {
+  //     return new MissingChar();
+  //   }
+  //   if (context.query.endpoint === "shufflecharacters") {
+  //     return new ShuffledCharacters();
+  //   }
+  // };
+  const getCollection = async () => {
+    const res = await axios.get(`${process.env.BE_SERVER}/api/heros`);
+    return res.data.data;
   };
-  const game = getGame();
-  await game.run();
+
+  const collection = await getCollection();
   const data = {
-    collection: game.collection,
-    completeCards: game.completeCards,
-    currentCards: game.currentCards,
-    missingChar: game.missingChar,
-    optionalCards: game.optionalCards,
-    players: game.players,
+    gameName: context.query.endpoint,
+    collection: collection,
+    // completeCards: game.completeCards,
+    // currentCards: game.currentCards,
+    // missingChar: game.missingChar,
+    // optionalCards: game.optionalCards,
   };
   return { props: { data } };
 }
