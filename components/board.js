@@ -25,11 +25,17 @@ export default function Board({ hero, removeHero, game }) {
     playBad();
   }
   useEffect(() => {
-    setCurrentCards([...Array(hero.hebrew.length)]);
     setProgressIndex(0);
     setCompleteBoard(false);
     console.log("board hero=", hero);
-    const [optional, required] = game.initCards(hero);
+    const [optional, required, tempCurrentCards] = game.initCards(hero);
+    console.log("optional=", optional);
+    console.log("required=", required);
+    console.log("tempCurrentCards=", tempCurrentCards);
+
+    // setCurrentCards([...Array(hero.hebrew.length)]);
+    setCurrentCards(tempCurrentCards);
+
     console.log("optional", optional);
     console.log("required", required);
     setOptionalCards(optional);
@@ -44,9 +50,11 @@ export default function Board({ hero, removeHero, game }) {
       userSelectedCardIndex
     );
     console.log("checkMove", checkMove);
-    setOptionalCards(checkMove.nextMoveOptionalCards);
-    setRequiredCard(checkMove.nextMoveRequiredCard);
     setCompleteBoard(checkMove.isComplete);
+    setRequiredCard(checkMove.nextMoveRequiredCard);
+    setCurrentCards(checkMove.nextMoveCurrentCards);
+    setOptionalCards(checkMove.nextMoveOptionalCards);
+
     if (checkMove.correctMove) {
       incScore();
     } else {
@@ -61,14 +69,14 @@ export default function Board({ hero, removeHero, game }) {
             {optionalCards && (
               <div className="board">
                 {optionalCards.map((ch, i) => {
-                  if (!ch.completed)
+                  if (true || !ch.completed)
                     return (
                       <div
                         className="letter"
                         key={i}
                         onClick={() => handleClickLetter(i)}
                       >
-                        {ch.value}
+                        {ch}
                       </div>
                     );
                 })}

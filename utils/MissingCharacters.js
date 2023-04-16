@@ -1,6 +1,8 @@
 import { Game } from "./game";
 
-export class ShuffledCharacters extends Game {
+const allChars = "אבגדהוזחטיכךלמםנןסעפףצץקרשת";
+
+export class MissingCharacters extends Game {
   constructor() {
     super();
     this.missingChar = null;
@@ -34,24 +36,25 @@ export class ShuffledCharacters extends Game {
     }
   }
   initCards(hero) {
-    let tempShuffledLetters = [...Array(hero.hebrew.length)];
-    hero.hebrew.split("").forEach((letter) => {
-      while (true) {
-        const rand = Math.round(
-          Math.random() * (hero.hebrew.split("").length - 1)
-        );
-        if (tempShuffledLetters[rand] === undefined) {
-          tempShuffledLetters[rand] = letter;
-          break;
+    const missingCharIndex = parseInt(Math.random() * hero.hebrew.length);
+    const missingChar = hero.hebrew[missingCharIndex];
+    let currentCards = [...hero.hebrew];
+    currentCards[missingCharIndex] = " ";
+    let count = 0;
+    const optionalCards = new Array(this.numOfOptionalChars);
+    while (count < this.numOfOptionalChars) {
+      const i = parseInt(Math.random() * allChars.length);
+      const j = parseInt(Math.random() * this.numOfOptionalChars);
+      if (!(allChars[i] in optionalCards) && !optionalCards[j]) {
+        count += 1;
+        if (count == 1) {
+          optionalCards[j] = missingChar;
+        } else {
+          optionalCards[j] = allChars[i];
         }
       }
-    });
-
-    return [
-      tempShuffledLetters,
-      hero.hebrew[0],
-      [...Array(hero.hebrew.length)],
-    ];
+    }
+    return [optionalCards, missingChar, currentCards];
   }
   checkMove(
     optionalCards,
@@ -67,15 +70,13 @@ export class ShuffledCharacters extends Game {
       isComplete;
     if (requiredCard === optionalCards[userSelectedCardIndex]) {
       correctMove = true;
-      nextMoveOptionalCards = optionalCards.filter(
-        (ch, i) => i != userSelectedCardIndex
-      );
-      const countSolved = currentCards.filter((ch) => ch).length;
-      currentCards[countSolved] = hero.hebrew[countSolved];
-      isComplete = countSolved + 1 === hero.hebrew.length;
-      nextMoveRequiredCard = isComplete
-        ? requiredCard
-        : hero.hebrew[countSolved + 1];
+      nextMoveOptionalCards = null;
+      currentCards = currentCards.map((ch) => {
+        if (ch === " ") return requiredCard;
+        return ch;
+      });
+      isComplete = true;
+      nextMoveRequiredCard = null;
     } else {
       correctMove = false;
       nextMoveOptionalCards = optionalCards;

@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import Image from "next/image";
 import { ShuffledCharacters } from "../../utils/ShuffledCharacters";
+import { MissingCharacters } from "../../utils/MissingCharacters";
 import PageHead from "../../components/PageHead";
 
 function Home({ data }) {
@@ -28,8 +29,9 @@ function Home({ data }) {
     console.log("choosen = ", data.collection[rand]);
   };
   const getGame = (gameName) => {
-    console.log("gameName=", gameName);
     if (gameName === "shuffledcharacters") return new ShuffledCharacters();
+    if (gameName === "missingchar") return new MissingCharacters();
+    if (gameName === "missingvowel") return new ShuffledCharacters();
   };
   const removeHero = () => {
     console.log("removeHero, data = ", data);
