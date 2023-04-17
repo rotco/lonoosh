@@ -52,7 +52,7 @@ function Home({ data }) {
 
   return (
     <div className="main-app">
-      <PageHead />
+      <PageHead width={100} height={108} />
       <WinningVideo />
       <Score />
 
