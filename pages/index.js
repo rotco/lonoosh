@@ -1,6 +1,6 @@
 import styles from "../styles/Home.module.css";
 import Score from "../components/Score";
-import Board from "../components/board";
+import Board from "../components/Board";
 
 import { useState, useEffect, useCallback } from "react";
 import WinningVideo from "../components/winningVideo";
