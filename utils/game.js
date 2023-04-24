@@ -61,8 +61,7 @@ export class Game {
     this.collection = res.data.data;
   }
 }
-
-export class MissingChar extends Game {
+class _MissingChar extends Game {
   constructor() {
     super();
     this.missingChar = null;
@@ -103,7 +102,7 @@ export class MissingChar extends Game {
   }
 }
 
-export class MissingVowel extends Game {
+class _MissingVowel extends Game {
   constructor() {
     super();
     this.missingVowel = null;

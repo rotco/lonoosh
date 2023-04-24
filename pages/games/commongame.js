@@ -12,6 +12,7 @@ import axios from "axios";
 import Image from "next/image";
 import { ShuffledCharacters } from "../../utils/ShuffledCharacters";
 import { MissingCharacters } from "../../utils/MissingCharacters";
+import { MissingVowel } from "../../utils/MissingVowel";
 import PageHead from "../../components/PageHead";
 
 function Home({ data }) {
@@ -29,7 +30,7 @@ function Home({ data }) {
   const getGame = (gameName) => {
     if (gameName === "shuffledcharacters") return new ShuffledCharacters();
     if (gameName === "missingchar") return new MissingCharacters();
-    if (gameName === "missingvowel") return new ShuffledCharacters();
+    if (gameName === "missingvowel") return new MissingVowel();
   };
   const removeHero = () => {
     console.log("removeHero, data = ", data);

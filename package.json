@@ -20,6 +20,7 @@
     "bidi-js": "^1.0.2",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
+    "log-symbols": "^5.1.0",
     "mongoose": "^6.7.2",
     "next": "13.0.4",
     "react": "18.2.0",

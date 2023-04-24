@@ -28,18 +28,24 @@ export default function Board({ hero, removeHero, game }) {
     setProgressIndex(0);
     setCompleteBoard(false);
     console.log("board hero=", hero);
-    const [optional, required, tempCurrentCards] = game.initCards(hero);
-    console.log("optional=", optional);
-    console.log("required=", required);
-    console.log("tempCurrentCards=", tempCurrentCards);
+    async function fetchData() {
+      const initResults = await game.initCards(hero);
+      const optional = initResults.optional;
+      const required = initResults.required;
+      const tempCurrentCards = initResults.tempCurrentCards;
+      console.log("optional=", optional);
+      console.log("required=", required);
+      console.log("tempCurrentCards=", tempCurrentCards);
 
-    // setCurrentCards([...Array(hero.hebrew.length)]);
-    setCurrentCards(tempCurrentCards);
+      // setCurrentCards([...Array(hero.hebrew.length)]);
+      setCurrentCards(tempCurrentCards);
 
-    console.log("optional", optional);
-    console.log("required", required);
-    setOptionalCards(optional);
-    setRequiredCard(required);
+      console.log("optional", optional);
+      console.log("required", required);
+      setOptionalCards(optional);
+      setRequiredCard(required);
+    }
+    fetchData();
   }, [hero.hebrew]);
   const handleClickLetter = (userSelectedCardIndex) => {
     const checkMove = game.checkMove(
