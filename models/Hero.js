@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import HeroType from "./Category";
 
 const HeroSchema = new mongoose.Schema({
   name: {
@@ -11,18 +12,24 @@ const HeroSchema = new mongoose.Schema({
     required: [true, "Please provide hebrew name for that hero"],
     maxlength: [40, "Hebrew Name cannot be more than 40 characters"],
   },
+  hebrewWithNikud: {
+    type: String,
+    required: false,
+  },
   imageurl: {
     type: String,
     required: [true, "Please specify the hero's image url"],
   },
   audioFile: {
     type: String,
-    required: [false, "Please specify the hero's audio file name"],
+    required: false,
   },
-  type: {
-    type: String,
-    required: [true, "Please specify the hero's type"],
-  },
+  categories: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
+  ],
 });
 
 export default mongoose.models.Hero || mongoose.model("Hero", HeroSchema);

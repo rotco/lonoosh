@@ -1,6 +1,8 @@
 import dbConnect from "../../../utils/dbConnect";
 import Hero from "../../../models/Hero";
 import speechSynth from "../../../utils/speechSynth";
+import Category from "../../../models/Category";
+
 export default async function handler(req, res) {
   const { method } = req;
 
@@ -18,11 +20,24 @@ export default async function handler(req, res) {
     case "POST":
       try {
         console.log("BODY:", req.body);
-        if (["pokemon", "superhero"].includes(req.body.type)) {
-          const file = await speechSynth(req.body.name);
-          if (!file.success) throw "could not create file";
-          req.body.audioFile = file.id;
+        await Hero.deleteMany({ name: req.body.name });
+        const categories = req.body.categories.split(",");
+        let categoryIds = [];
+        for (const category of categories) {
+          if (["needAudio"].includes(category)) {
+            const file = await speechSynth(req.body.name);
+            if (!file.success) throw "could not create file";
+            req.body.audioFile = file.id;
+          }
+          console.log("category = ", category);
+          const categoryFromDb = await Category.findOne({
+            name: category,
+          });
+          console.log("categoryFromDb = ", categoryFromDb);
+
+          categoryIds.push(categoryFromDb._id);
         }
+        req.body.categories = categoryIds;
         const hero = await Hero.create(req.body);
         res.status(201).json({ success: true, data: hero });
       } catch (error) {
