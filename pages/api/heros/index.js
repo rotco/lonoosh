@@ -11,7 +11,9 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const heros = await Hero.find({});
+        const filter = JSON.parse(decodeURIComponent(req.query.filter));
+        console.log("filter====", filter);
+        const heros = await Hero.find(filter);
         res.status(200).json({ success: true, data: heros });
       } catch (error) {
         res.status(400).json({ success: false });

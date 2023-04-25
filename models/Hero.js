@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import HeroType from "./Category";
+import Category from "./Category";
 
 const HeroSchema = new mongoose.Schema({
   name: {

@@ -56,8 +56,10 @@ export class Game {
     this.score += num;
     return this.score;
   }
-  async setCollection(collection) {
-    const res = await axios.get(`${process.env.BE_SERVER}/api/heros`);
+  async setCollection(filter) {
+    const res = await axios.get(
+      `${process.env.BE_SERVER}/api/heros?filter=${filter}`
+    );
     this.collection = res.data.data;
   }
 }

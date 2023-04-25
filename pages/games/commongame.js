@@ -99,24 +99,23 @@ export default Home;
 
 export async function getServerSideProps(context) {
   console.log("context.query", context.query);
-
-  // const getGame = () => {
-  //   if (context.query.endpoint === "missingchar") {
-  //     return new MissingChar();
-  //   }
-  //   if (context.query.endpoint === "shufflecharacters") {
-  //     return new ShuffledCharacters();
-  //   }
-  // };
-  const getCollection = async () => {
-    const res = await axios.get(`${process.env.BE_SERVER}/api/heros`);
-    return res.data.data;
+  const getGame = (gameName) => {
+    if (gameName === "shuffledcharacters") return new ShuffledCharacters();
+    if (gameName === "missingchar") return new MissingCharacters();
+    if (gameName === "missingvowel") return new MissingVowel();
   };
-
-  const collection = await getCollection();
+  const game = getGame(context.query.endpoint);
+  // const getCollection = async () => {
+  //   const res = await axios.get(`${process.env.BE_SERVER}/api/heros`);
+  //   return res.data.data;
+  // };
+  const filter = await game.getHeroFilter();
+  await game.setCollection(filter);
+  // const collection = await getCollection();
   const data = {
     gameName: context.query.endpoint,
-    collection: collection,
+    collection: game.collection,
+
     // completeCards: game.completeCards,
     // currentCards: game.currentCards,
     // missingChar: game.missingChar,

@@ -1,7 +1,8 @@
 import { set } from "mongoose";
 import { Game } from "./game";
 import axios from "axios";
-
+import Category from "../models/Category";
+import dbConnect from "./dbConnect";
 const allChars = "אבגדהוזחטיכךלמםנןסעפףצץקרשת";
 
 export class MissingVowel extends Game {
@@ -18,6 +19,11 @@ export class MissingVowel extends Game {
       cholam: 1465,
       shuruk: 1468,
     };
+  }
+  async getHeroFilter() {
+    await dbConnect();
+    const category = await Category.findOne({ name: "needNikud" });
+    return JSON.stringify({ categories: category._id });
   }
   findNikudRegex() {
     let regexString = "";
@@ -95,11 +101,11 @@ export class MissingVowel extends Game {
     //   type: "object",
     // };
     console.log("hero:", hero);
-    const vowlName = await this.getVowels(hero["hebrew"]);
-    console.log("vowlName:", vowlName);
+    // const vowlName = await this.getVowels(hero["hebrew"]);
+    // console.log("vowlName:", vowlName);
     const regex =
       /([\u0591-\u05BD\u05BF-\u05C7]*[\u05D0-\u05EA][\u0591-\u05C7]*)/g;
-    let currentCards = vowlName.match(regex);
+    let currentCards = hero.hebrewWithNikud.match(regex);
     let missingChar;
     let matchCode;
     let missingCharIndex;
