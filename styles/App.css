@@ -60,6 +60,7 @@
 .game-card {
   border: 4px solid #73daeee3;
   padding: 10px;
+  margin: 10px;
   box-shadow: pink 5px 5px 10px;
 }
 .game-card:hover {
@@ -68,7 +69,7 @@
   box-shadow: rgb(7, 118, 203) 5px 5px 20px;
 }
 a {
-  font-size: 2em;
+  font-size: 1.5em;
   text-decoration-line: none;
   color: rgba(194, 69, 247, 0.8);
 }
