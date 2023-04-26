@@ -14,15 +14,16 @@ export class MissingVowel extends Game {
       kamats: 1464,
       shva: 1456,
       chirik: 1460,
-      dagesh: 1468,
+      // dagesh: 1468,
       patach: 1463,
       cholam: 1465,
-      shuruk: 1468,
+      shuruk: 1467,
     };
   }
   async getHeroFilter() {
     await dbConnect();
     const category = await Category.findOne({ name: "needNikud" });
+    // return JSON.stringify({ name: "chips" });
     return JSON.stringify({ categories: category._id });
   }
   findNikudRegex() {
@@ -109,17 +110,21 @@ export class MissingVowel extends Game {
     let missingChar;
     let matchCode;
     let missingCharIndex;
+    let codes = Object.values(this.nikudCodes);
+
     while (true) {
       missingCharIndex = parseInt(Math.random() * currentCards.length);
       missingChar = currentCards[missingCharIndex];
       const matches = missingChar.match(this.findNikudRegex());
       if (matches) {
         console.log("matches:", matches);
-        matchCode = matches.join().charCodeAt(matches.length - 1);
+        const m = matches.find((ch) => {
+          return codes.includes(ch.charCodeAt(0));
+        });
+        matchCode = m[0].charCodeAt(0);
         break;
       }
     }
-    let codes = Object.values(this.nikudCodes);
 
     currentCards[missingCharIndex] = " ";
     let count = 0;

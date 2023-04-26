@@ -51,9 +51,17 @@ function Home({ data }) {
 
   return (
     <div className="main-app">
-      <PageHead width={100} height={108} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "0 20px 0 20px;",
+        }}
+      >
+        <PageHead width={100} height={108} />
+        <Score />
+      </div>
       <WinningVideo />
-      <Score />
 
       {hero && (
         <div>
