@@ -4,12 +4,9 @@ import Board from "../../components/Board";
 import { useState, useEffect, useCallback } from "react";
 import WinningVideo from "../../components/winningVideo";
 import SayName from "../../components/SayName";
-import CampaignIcon from "@mui/icons-material/Campaign";
 import ReactHowler from "react-howler";
 import { display } from "@mui/system";
-import IconButton from "@mui/material/IconButton";
 import axios from "axios";
-import Image from "next/image";
 import { ShuffledCharacters } from "../../utils/ShuffledCharacters";
 import { MissingCharacters } from "../../utils/MissingCharacters";
 import { MissingVowel } from "../../utils/MissingVowel";
@@ -33,19 +30,14 @@ function Home({ data }) {
     if (gameName === "missingvowel") return new MissingVowel();
   };
   const removeHero = () => {
-    console.log("removeHero, data = ", data);
     console.log("hero = ", hero);
     data.collection = data.collection.filter((obj) => obj._id !== hero._id);
     chooseHero();
   };
 
   useEffect(() => {
-    console.log("USEEFFECT INDEX");
-    console.log("data=", data);
     const tempGame = getGame(data.gameName);
     setGame(tempGame);
-    console.log("tempGame = ", tempGame);
-
     chooseHero(tempGame);
   }, []);
 
@@ -65,31 +57,6 @@ function Home({ data }) {
 
       {hero && (
         <div>
-          <div
-            style={{
-              // display: "flex",
-              alignItems: "center",
-              alignContent: "center",
-              textAlign: "center",
-              justifyContent: "center",
-            }}
-          >
-            <IconButton
-              onClick={() => setRunSayName(true)}
-              style={{
-                position: "absolute",
-              }}
-            >
-              <CampaignIcon
-                style={{
-                  fontSize: "50px",
-                  color: "#af1f1f",
-                  variant: "outlined",
-                }}
-              />
-            </IconButton>
-            <Image src={hero.imageurl} height={400} width={400} />
-          </div>
           <Board hero={hero} removeHero={removeHero} game={game} />
           {runSayName && (
             <SayName

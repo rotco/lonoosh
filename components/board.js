@@ -3,6 +3,7 @@ import AppContext from "./AppContext";
 import useSound from "use-sound";
 // import bad1 from "../public/assets/sounds/bad1.mp4";
 // import good1 from "../public/assets/sounds/good1.mp4";
+import FeaturedImage from "./FeaturedImage";
 
 export default function Board({ hero, removeHero, game }) {
   const [currentCards, setCurrentCards] = useState();
@@ -70,24 +71,29 @@ export default function Board({ hero, removeHero, game }) {
   return (
     <div>
       {currentCards && (
-        <div>
+        <div className="board">
           <div>
-            {optionalCards && (
-              <div className="board">
-                {optionalCards.map((ch, i) => {
-                  if (true || !ch.completed)
-                    return (
-                      <div
-                        className="letter"
-                        key={i}
-                        onClick={() => handleClickLetter(i)}
-                      >
-                        {ch}
-                      </div>
-                    );
-                })}
-              </div>
-            )}
+            <div className="optional-cards">
+              {optionalCards && (
+                <div>
+                  {optionalCards.map((ch, i) => {
+                    if (true || !ch.completed)
+                      return (
+                        <div
+                          className="letter"
+                          key={i}
+                          onClick={() => handleClickLetter(i)}
+                        >
+                          {ch}
+                        </div>
+                      );
+                  })}
+                </div>
+              )}
+            </div>
+            <div>
+              <FeaturedImage hero={hero} />
+            </div>
           </div>
           <div className="progress">
             {currentCards.map((ch, i) => {
@@ -98,8 +104,8 @@ export default function Board({ hero, removeHero, game }) {
               );
             })}
           </div>
-          {completeBoard && (
-            <div className="next">
+          <div className="next">
+            {completeBoard && (
               <img
                 onClick={() => {
                   removeHero();
@@ -107,8 +113,8 @@ export default function Board({ hero, removeHero, game }) {
                 src="/assets/gift.svg"
                 height="200px"
               />
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </div>
