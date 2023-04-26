@@ -46,7 +46,11 @@ export class ShuffledCharacters extends Game {
         }
       }
     });
-
+    return {
+      optional: tempShuffledLetters,
+      required: hero.hebrew[0],
+      tempCurrentCards: [...Array(hero.hebrew.length)],
+    };
     return [
       tempShuffledLetters,
       hero.hebrew[0],
