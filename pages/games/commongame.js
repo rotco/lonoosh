@@ -15,7 +15,6 @@ import PageHead from "../../components/PageHead";
 function Home({ data }) {
   const [hero, setHero] = useState(null);
   const [game, setGame] = useState(null);
-  const [runSayName, setRunSayName] = useState(false);
   const chooseHero = (tempGame) => {
     console.log("chooseHero");
     console.log("game in chooseHero=", tempGame);
@@ -58,13 +57,6 @@ function Home({ data }) {
       {hero && (
         <div>
           <Board hero={hero} removeHero={removeHero} game={game} />
-          {runSayName && (
-            <SayName
-              audioFile={hero.audioFile}
-              runSayName={runSayName}
-              setRunSayName={setRunSayName}
-            />
-          )}
         </div>
       )}
     </div>
