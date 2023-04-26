@@ -56,6 +56,9 @@ export class Game {
     this.score += num;
     return this.score;
   }
+  async getHeroFilter() {
+    return JSON.stringify({});
+  }
   async setCollection(filter) {
     const res = await axios.get(
       `${process.env.BE_SERVER}/api/heros?filter=${filter}`

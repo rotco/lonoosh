@@ -39,17 +39,15 @@ export default async function handler(req, res) {
       const herosForNikud = await findHeroes();
       async function addNikud(heros) {
         for (const hero of heros) {
-          if (
-            !hero.hasOwnProperty("hebrewWithNikud") ||
-            !hero.hebrewWithNikud
-          ) {
+          if (!hero.hebrewWithNikud) {
             try {
               const missingVowel = new MissingVowel();
               const hebWithNikud = await missingVowel.getVowels(hero.hebrew);
-              await Hero.updateOne(
+              const added = await Hero.updateOne(
                 { _id: hero._id },
                 { $set: { hebrewWithNikud: hebWithNikud } }
               );
+              console.log(`hero added: ${added}`);
             } catch (err) {
               console.log("ERROR=", err);
             }

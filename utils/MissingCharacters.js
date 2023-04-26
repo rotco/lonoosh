@@ -54,7 +54,11 @@ export class MissingCharacters extends Game {
         }
       }
     }
-    return [optionalCards, missingChar, currentCards];
+    return {
+      optional: optionalCards,
+      required: missingChar,
+      tempCurrentCards: currentCards,
+    };
   }
   checkMove(
     optionalCards,
