@@ -26,27 +26,29 @@ function Home({ data }) {
       <PageHead />
       <div className="games-cards">
         {games.length > 0 &&
-          games.map((game, index) => {
-            return (
-              <div key={index} className="game-card">
-                <Link
-                  href={{
-                    pathname: "/games/commongame",
-                    query: { endpoint: game.endpoint },
-                  }}
-                >
-                  <Image
-                    src={"/assets/images/" + game.imageurl}
-                    width={300}
-                    height={300}
-                  ></Image>
-                  <div className="label" style={{ font: "1.5rem" }}>
-                    {game.hebrew}
-                  </div>
-                </Link>
-              </div>
-            );
-          })}
+          games
+            .sort((a, b) => a.order - b.order)
+            .map((game, index) => {
+              return (
+                <div key={index} className="game-card">
+                  <Link
+                    href={{
+                      pathname: "/games/commongame",
+                      query: { endpoint: game.endpoint },
+                    }}
+                  >
+                    <Image
+                      src={"/assets/images/" + game.imageurl}
+                      width={300}
+                      height={300}
+                    ></Image>
+                    <div className="label" style={{ font: "1.5rem" }}>
+                      {game.hebrew}
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
       </div>
     </div>
   );
