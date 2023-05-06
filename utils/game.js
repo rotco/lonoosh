@@ -117,16 +117,9 @@ class _MissingVowel extends Game {
     this.hero =
       this.collection[parseInt(Math.random() * this.collection.length)];
     const vowlName = await getVowels(this.hero["hebrew"]);
-    console.log("vowlName:", vowlName);
-
-    // const regex = /([\u0591-\u05BD\u05BF-\u05C7]*[\u05D0-\u05EA])/g;
     const regex =
       /([\u0591-\u05BD\u05BF-\u05C7]*[\u05D0-\u05EA][\u0591-\u05C7]*)/g;
     this.completeCards = vowlName.match(regex);
-    console.log("this.completeCards:", this.completeCards);
-    // const bidi = require("unicode-bidirectional").bidi;
-    // const reordered = bidi(result.join(""), { isolate: true }).split("");
-    // console.log("reordered: ", reordered);
   }
 
   setCurrentCards() {
@@ -152,22 +145,3 @@ class _MissingVowel extends Game {
     }
   }
 }
-// const run = async () => {
-//   // const mcGame = new MissingChar();
-//   // mcGame.selectRandomHero();
-//   // mcGame.setCurrentCards();
-//   // mcGame.setOptionalCards();
-//   // console.log(mcGame.currentCards);
-//   // console.log(mcGame.completeCards);
-//   // console.log(mcGame.optionalCards);
-
-//   const mvGame = new MissingVowel();
-//   mvGame.setCollection(collection);
-//   await mvGame.selectRandomHero();
-//   mvGame.setCurrentCards();
-//   mvGame.setOptionalCards();
-//   console.log(mvGame.currentCards);
-//   console.log(mvGame.completeCards);
-//   console.log(mvGame.optionalCards);
-// };
-// run();

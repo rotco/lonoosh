@@ -9,7 +9,6 @@ export default async function handler(req, res) {
   switch (endpoint) {
     case "update_all":
       const heros = await Hero.find({});
-      console.log("heros:", heros);
       const filter = {};
       const update = { $set: { type: "pokemon" } };
       // commenting the actual update to avoid user mistake

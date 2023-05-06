@@ -7,13 +7,11 @@ export default async function handler(req, res) {
     method,
   } = req;
   await dbConnect();
-  console.log("slug=", slug);
 
   switch (method) {
     case "GET":
       try {
         const game = await Game.find({ endpoint: slug });
-        console.log("game =", game);
         res.status(200).json({ success: true, data: game });
       } catch (error) {
         res.status(400).json({ success: false });

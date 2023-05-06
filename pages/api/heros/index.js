@@ -12,7 +12,6 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const filter = JSON.parse(decodeURIComponent(req.query.filter));
-        console.log("filter====", filter);
         const heros = await Hero.find(filter);
         res.status(200).json({ success: true, data: heros });
       } catch (error) {
@@ -21,7 +20,6 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        console.log("BODY:", req.body);
         await Hero.deleteMany({ name: req.body.name });
         const categories = req.body.categories.split(",");
         let categoryIds = [];
@@ -31,12 +29,9 @@ export default async function handler(req, res) {
             if (!file.success) throw "could not create file";
             req.body.audioFile = file.id;
           }
-          console.log("category = ", category);
           const categoryFromDb = await Category.findOne({
             name: category,
           });
-          console.log("categoryFromDb = ", categoryFromDb);
-
           categoryIds.push(categoryFromDb._id);
         }
         req.body.categories = categoryIds;

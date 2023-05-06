@@ -55,10 +55,6 @@ export class MissingVowel extends Game {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      console.log(
-        "data.data[0].nakdan.options[0].w",
-        data.data[0].nakdan.options[0].w
-      );
       return data.data[0].nakdan.options[0].w;
     } catch (error) {
       console.log("error", error);
@@ -93,17 +89,6 @@ export class MissingVowel extends Game {
     }
   }
   async initCards(hero) {
-    // hero = {
-    //   name: "table",
-    //   hebrew: "שולחן",
-    //   imageurl:
-    //     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/68.svg",
-    //   audioFile: "machamp.b38c3654-0491-4246-8313-67a98fdc5a3f.mp3",
-    //   type: "object",
-    // };
-    console.log("hero:", hero);
-    // const vowlName = await this.getVowels(hero["hebrew"]);
-    // console.log("vowlName:", vowlName);
     const regex =
       /([\u0591-\u05BD\u05BF-\u05C7]*[\u05D0-\u05EA][\u0591-\u05C7]*)/g;
     let currentCards = hero.hebrewWithNikud.match(regex);
@@ -117,7 +102,6 @@ export class MissingVowel extends Game {
       missingChar = currentCards[missingCharIndex];
       const matches = missingChar.match(this.findNikudRegex());
       if (matches) {
-        console.log("matches:", matches);
         const m = matches.find((ch) => {
           return codes.includes(ch.charCodeAt(0));
         });

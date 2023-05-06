@@ -19,8 +19,6 @@ const run = async () => {
     const res = await pollyClient.send(
       new StartSpeechSynthesisTaskCommand(params)
     );
-    console.log(res.SynthesisTask.OutputUri);
-    console.log("Success, audio file added to " + JSON.stringify(res));
   } catch (err) {
     console.log("Error putting object", err);
   }

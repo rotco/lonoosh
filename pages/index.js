@@ -58,6 +58,5 @@ export default Home;
 export async function getServerSideProps() {
   const res = await axios.get(`${process.env.BE_SERVER}/api/games`);
   const data = await res.data.data;
-  console.log("data:", data);
   return { props: { data } };
 }

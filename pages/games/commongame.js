@@ -16,12 +16,9 @@ function Home({ data }) {
   const [hero, setHero] = useState(null);
   const [game, setGame] = useState(null);
   const chooseHero = (tempGame) => {
-    console.log("chooseHero");
-    console.log("game in chooseHero=", tempGame);
     const rand = Math.round(Math.random() * (data.collection.length - 1));
     const choosen = data.collection[rand];
     setHero(choosen);
-    console.log("choosen = ", data.collection[rand]);
   };
   const getGame = (gameName) => {
     if (gameName === "shuffledcharacters") return new ShuffledCharacters();
@@ -29,7 +26,6 @@ function Home({ data }) {
     if (gameName === "missingvowel") return new MissingVowel();
   };
   const removeHero = () => {
-    console.log("hero = ", hero);
     data.collection = data.collection.filter((obj) => obj._id !== hero._id);
     chooseHero();
   };
@@ -46,7 +42,7 @@ function Home({ data }) {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          margin: "0 20px 0 20px;",
+          margin: "0 20px 0 20px",
         }}
       >
         <PageHead width={100} height={108} />
@@ -65,28 +61,17 @@ function Home({ data }) {
 export default Home;
 
 export async function getServerSideProps(context) {
-  console.log("context.query", context.query);
   const getGame = (gameName) => {
     if (gameName === "shuffledcharacters") return new ShuffledCharacters();
     if (gameName === "missingchar") return new MissingCharacters();
     if (gameName === "missingvowel") return new MissingVowel();
   };
   const game = getGame(context.query.endpoint);
-  // const getCollection = async () => {
-  //   const res = await axios.get(`${process.env.BE_SERVER}/api/heros`);
-  //   return res.data.data;
-  // };
   const filter = await game.getHeroFilter();
   await game.setCollection(filter);
-  // const collection = await getCollection();
   const data = {
     gameName: context.query.endpoint,
     collection: game.collection,
-
-    // completeCards: game.completeCards,
-    // currentCards: game.currentCards,
-    // missingChar: game.missingChar,
-    // optionalCards: game.optionalCards,
   };
   return { props: { data } };
 }

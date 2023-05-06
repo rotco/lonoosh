@@ -28,21 +28,12 @@ export default function Board({ hero, removeHero, game }) {
   useEffect(() => {
     setProgressIndex(0);
     setCompleteBoard(false);
-    console.log("board hero=", hero);
     async function fetchData() {
       const initResults = await game.initCards(hero);
       const optional = initResults.optional;
       const required = initResults.required;
       const tempCurrentCards = initResults.tempCurrentCards;
-      console.log("optional=", optional);
-      console.log("required=", required);
-      console.log("tempCurrentCards=", tempCurrentCards);
-
-      // setCurrentCards([...Array(hero.hebrew.length)]);
       setCurrentCards(tempCurrentCards);
-
-      console.log("optional", optional);
-      console.log("required", required);
       setOptionalCards(optional);
       setRequiredCard(required);
     }
@@ -56,7 +47,6 @@ export default function Board({ hero, removeHero, game }) {
       hero,
       userSelectedCardIndex
     );
-    console.log("checkMove", checkMove);
     setCompleteBoard(checkMove.isComplete);
     setRequiredCard(checkMove.nextMoveRequiredCard);
     setCurrentCards(checkMove.nextMoveCurrentCards);
