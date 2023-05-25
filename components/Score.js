@@ -6,8 +6,6 @@ export default function Score() {
   const context = useContext(AppContext);
   const [progressColor, setProgressColor] = useState("danger");
   useEffect(() => {
-    console.log("useEffect, context.scoreContext", context.scoreContext);
-    console.log("progressColor", progressColor);
     if (context.scoreContext <= 3) {
       setProgressColor("danger");
     } else if (context.scoreContext > 3 && context.scoreContext <= 6) {
@@ -21,10 +19,10 @@ export default function Score() {
 
   return (
     <div className="_score">
-      <div>ניקוד</div>
+      <div className="scoreLabel">ניקוד</div>
       <div>
         <ProgressBar
-          now={Math.max(context.scoreContext * 10, 10)}
+          now={Math.max(context.scoreContext * 10, 8)}
           label={`${context.scoreContext * 10}%`}
           variant={progressColor}
           animated
