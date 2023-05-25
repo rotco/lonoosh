@@ -12,6 +12,7 @@ export default function PageHead({ width, height }) {
         src="/assets/images/alona_games_logo_320.jpg"
         width={width ? width : 200}
         height={height ? height : 217}
+        alt="banner"
       ></Image>
     </div>
   );

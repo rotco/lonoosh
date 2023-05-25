@@ -5,7 +5,6 @@ import Image from "next/image";
 import SayName from "./SayName";
 export default function FeaturedImage({ hero, game }) {
   const [runSayName, setRunSayName] = useState(false);
-  console.log("game", game.constructor.name === "MissingVowel");
   return (
     <div
       style={{
@@ -16,7 +15,7 @@ export default function FeaturedImage({ hero, game }) {
         justifyContent: "center",
       }}
     >
-      {true && (
+      {game.constructor.name != "MissingVowel" && (
         <IconButton
           onClick={() => setRunSayName(true)}
           style={{
@@ -32,7 +31,7 @@ export default function FeaturedImage({ hero, game }) {
           />
         </IconButton>
       )}
-      <Image src={hero.imageurl} height={400} width={400} />
+      <Image src={hero.imageurl} height={400} width={400} alt="hero" />
       {runSayName && (
         <SayName
           audioFile={hero.audioFile}

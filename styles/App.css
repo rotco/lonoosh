@@ -76,7 +76,11 @@ a {
   text-decoration-line: none;
   color: rgba(194, 69, 247, 0.8);
 }
-
+.scoreLabel {
+  color: #e67299;
+  font-size: 1.5rem;
+  text-shadow: yellow 1px 1px 5px;
+}
 body {
   all: unset;
   margin: 0px;

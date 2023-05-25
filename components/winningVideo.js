@@ -18,7 +18,6 @@ export default function WinningVideo({}) {
   const [choosenVideo, setChoosenVideo] = useState(null);
   const chooseVideo = (urls) => {
     const choosen = urls[parseInt(Math.random() * urls.length)];
-    console.log("choosen", choosen);
     return choosen;
   };
   useEffect(() => {

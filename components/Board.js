@@ -19,7 +19,7 @@ export default function Board({ hero, removeHero, game }) {
     playGood();
   }
   function decScore() {
-    context.setScoreContext(context.scoreContext - 1);
+    context.setScoreContext(Math.max(0, context.scoreContext - 1));
     context.setActionContext("dec");
 
     playBad();

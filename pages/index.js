@@ -41,6 +41,7 @@ function Home({ data }) {
                       src={"/assets/images/" + game.imageurl}
                       width={300}
                       height={300}
+                      alt="game"
                     ></Image>
                     <div className="label" style={{ font: "1.5rem" }}>
                       {game.hebrew}
