@@ -14,7 +14,7 @@
 .score .number {
   padding-left: 12px;
 }
-.letter {
+.letterCard {
   text-align: center;
   white-space: pre;
 
@@ -28,7 +28,7 @@
   max-height: 3rem;
   /* box-shadow: 5px 5px 5px rgb(244, 197, 197); */
 }
-.board .letter:hover {
+.board .letterCard:hover {
   box-shadow: 5px 5px 5px #fce113;
   border: 1px solid rgb(244, 197, 197);
 }
@@ -37,7 +37,7 @@
   z-index: 1000;
   right: 1%;
 }
-.progress {
+.currentCards {
   margin-top: 1%;
   display: flex;
   -webkit-flex-direction: row-reverse;
@@ -68,6 +68,9 @@
   padding: 10px;
   box-shadow: rgb(7, 118, 203) 5px 5px 20px;
 }
+.next-step {
+  cursor: pointer;
+}
 a {
   font-size: 1.5em;
   text-decoration-line: none;
@@ -75,5 +78,6 @@ a {
 }
 
 body {
+  all: unset;
   margin: 0px;
 }

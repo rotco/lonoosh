@@ -15,6 +15,8 @@ import PageHead from "../../components/PageHead";
 function Home({ data }) {
   const [hero, setHero] = useState(null);
   const [game, setGame] = useState(null);
+  const [origCollection, setOrigCollection] = useState(null);
+
   const chooseHero = (tempGame) => {
     const rand = Math.round(Math.random() * (data.collection.length - 1));
     const choosen = data.collection[rand];
@@ -26,6 +28,9 @@ function Home({ data }) {
     if (gameName === "missingvowel") return new MissingVowel();
   };
   const removeHero = () => {
+    if (data.collection.length == 1) {
+      data.collection = JSON.parse(JSON.stringify(origCollection));
+    }
     data.collection = data.collection.filter((obj) => obj._id !== hero._id);
     chooseHero();
   };
@@ -34,6 +39,7 @@ function Home({ data }) {
     const tempGame = getGame(data.gameName);
     setGame(tempGame);
     chooseHero(tempGame);
+    setOrigCollection(JSON.parse(JSON.stringify(data.collection)));
   }, []);
 
   return (
@@ -45,8 +51,21 @@ function Home({ data }) {
           margin: "0 20px 0 20px",
         }}
       >
-        <PageHead width={100} height={108} />
-        <Score />
+        <div
+          style={{
+            flex: 1,
+          }}
+        >
+          <PageHead width={100} height={108} />
+        </div>
+        <div
+          style={{
+            flex: 1,
+            alignSelf: "center",
+          }}
+        >
+          <Score />
+        </div>
       </div>
       <WinningVideo />
 

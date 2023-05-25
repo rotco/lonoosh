@@ -1,6 +1,7 @@
 import { useState, createContext } from "react";
 import AppContext from "../components/AppContext";
 import "../styles/App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyApp({ Component, pageProps }) {
   const [scoreContext, setScoreContext] = useState(0);

@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import CampaignIcon from "@mui/icons-material/Campaign";
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
 import IconButton from "@mui/material/IconButton";
 import Image from "next/image";
 import SayName from "./SayName";
-export default function FeaturedImage({ hero }) {
+export default function FeaturedImage({ hero, game }) {
   const [runSayName, setRunSayName] = useState(false);
-
+  console.log("game", game.constructor.name === "MissingVowel");
   return (
     <div
       style={{
@@ -16,20 +16,22 @@ export default function FeaturedImage({ hero }) {
         justifyContent: "center",
       }}
     >
-      <IconButton
-        onClick={() => setRunSayName(true)}
-        style={{
-          position: "absolute",
-        }}
-      >
-        <CampaignIcon
+      {true && (
+        <IconButton
+          onClick={() => setRunSayName(true)}
           style={{
-            fontSize: "50px",
-            color: "#af1f1f",
-            variant: "outlined",
+            position: "absolute",
           }}
-        />
-      </IconButton>
+        >
+          <RecordVoiceOverIcon
+            style={{
+              fontSize: "50px",
+              color: "#af1f1f",
+              variant: "outlined",
+            }}
+          />
+        </IconButton>
+      )}
       <Image src={hero.imageurl} height={400} width={400} />
       {runSayName && (
         <SayName

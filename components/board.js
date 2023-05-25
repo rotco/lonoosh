@@ -1,8 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import AppContext from "./AppContext";
 import useSound from "use-sound";
-// import bad1 from "../public/assets/sounds/bad1.mp4";
-// import good1 from "../public/assets/sounds/good1.mp4";
 import FeaturedImage from "./FeaturedImage";
 
 export default function Board({ hero, removeHero, game }) {
@@ -12,8 +10,9 @@ export default function Board({ hero, removeHero, game }) {
   const [requiredCard, setRequiredCard] = useState(null);
   const [completeBoard, setCompleteBoard] = useState(false);
   const context = useContext(AppContext);
-  const [playBad] = useSound("/assets/sounds/bad1.mp4");
-  const [playGood] = useSound("/assets/sounds/good1.mp4");
+  const [playBad] = useSound("/assets/sounds/step_bad.mp3");
+  const [playGood] = useSound("/assets/sounds/step_good.mp3");
+  const [playApplause] = useSound("/assets/sounds/applause.mp3");
   function incScore() {
     context.setScoreContext(context.scoreContext + 1);
     context.setActionContext("inc");
@@ -70,7 +69,7 @@ export default function Board({ hero, removeHero, game }) {
                     if (true || !ch.completed)
                       return (
                         <div
-                          className="letter"
+                          className="letterCard"
                           key={i}
                           onClick={() => handleClickLetter(i)}
                         >
@@ -82,22 +81,23 @@ export default function Board({ hero, removeHero, game }) {
               )}
             </div>
             <div>
-              <FeaturedImage hero={hero} />
+              <FeaturedImage hero={hero} game={game} />
             </div>
           </div>
-          <div className="progress">
+          <div className="currentCards">
             {currentCards.map((ch, i) => {
               return (
-                <div className="letter" key={i}>
+                <div className="letterCard" key={i}>
                   {ch}
                 </div>
               );
             })}
           </div>
-          <div className="next">
+          <div className="next-step">
             {completeBoard && (
               <img
                 onClick={() => {
+                  playApplause();
                   removeHero();
                 }}
                 src="/assets/gift.svg"
