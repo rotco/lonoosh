@@ -10,6 +10,7 @@ import axios from "axios";
 import { ShuffledCharacters } from "../../utils/ShuffledCharacters";
 import { MissingCharacters } from "../../utils/MissingCharacters";
 import { MissingVowel } from "../../utils/MissingVowel";
+import { WhichSong } from "../../utils/WhichSong";
 import PageHead from "../../components/PageHead";
 
 function Home({ data }) {
@@ -26,6 +27,7 @@ function Home({ data }) {
     if (gameName === "shuffledcharacters") return new ShuffledCharacters();
     if (gameName === "missingchar") return new MissingCharacters();
     if (gameName === "missingvowel") return new MissingVowel();
+    if (gameName === "whichsong") return new WhichSong(data.collection);
   };
   const removeHero = () => {
     if (data.collection.length == 1) {
@@ -84,6 +86,7 @@ export async function getServerSideProps(context) {
     if (gameName === "shuffledcharacters") return new ShuffledCharacters();
     if (gameName === "missingchar") return new MissingCharacters();
     if (gameName === "missingvowel") return new MissingVowel();
+    if (gameName === "whichsong") return new WhichSong();
   };
   const game = getGame(context.query.endpoint);
   const filter = await game.getHeroFilter();

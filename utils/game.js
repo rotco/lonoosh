@@ -1,3 +1,6 @@
+import dbConnect from "./dbConnect";
+import Category from "../models/Category";
+
 const axios = require("axios");
 
 const collection = [
@@ -57,7 +60,9 @@ export class Game {
     return this.score;
   }
   async getHeroFilter() {
-    return JSON.stringify({});
+    await dbConnect();
+    const category = await Category.findOne({ name: "singer" });
+    return JSON.stringify({ categories: { $ne: category._id } });
   }
   async setCollection(filter) {
     const res = await axios.get(

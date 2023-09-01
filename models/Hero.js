@@ -32,4 +32,6 @@ const HeroSchema = new mongoose.Schema({
   ],
 });
 
-export default mongoose.models.Hero || mongoose.model("Hero", HeroSchema);
+// export default mongoose.models.Hero || mongoose.model("Hero", HeroSchema);
+module.exports = mongoose.models?.Hero || mongoose.model("Hero", HeroSchema);
+// const Hero = mongoose.model("Hero", HeroSchema);

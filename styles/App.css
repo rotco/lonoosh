@@ -24,7 +24,7 @@
   cursor: pointer;
   font-size: 2rem;
   padding: 2px;
-  width: 2rem;
+  min-width: 2rem;
   max-height: 3rem;
   /* box-shadow: 5px 5px 5px rgb(244, 197, 197); */
 }
@@ -33,6 +33,7 @@
   border: 1px solid rgb(244, 197, 197);
 }
 .optional-cards {
+  direction: rtl;
   position: absolute;
   z-index: 1000;
   right: 1%;

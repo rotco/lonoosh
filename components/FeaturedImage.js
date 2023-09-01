@@ -15,7 +15,7 @@ export default function FeaturedImage({ hero, game }) {
         justifyContent: "center",
       }}
     >
-      {game.constructor.name != "MissingVowel" && (
+      {!["MissingVowel", "WhichSong"].includes(game.constructor.name) && (
         <IconButton
           onClick={() => setRunSayName(true)}
           style={{
