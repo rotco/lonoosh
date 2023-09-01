@@ -86,3 +86,6 @@ body {
   all: unset;
   margin: 0px;
 }
+.label {
+  direction: rtl;
+}
