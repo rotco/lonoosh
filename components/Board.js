@@ -50,7 +50,6 @@ export default function Board({ hero, removeHero, game }) {
     setRequiredCard(checkMove.nextMoveRequiredCard);
     setCurrentCards(checkMove.nextMoveCurrentCards);
     setOptionalCards(checkMove.nextMoveOptionalCards);
-
     if (checkMove.correctMove) {
       incScore();
     } else {
@@ -59,12 +58,17 @@ export default function Board({ hero, removeHero, game }) {
   };
   return (
     <div>
-      {currentCards && (
-        <div className="board">
+      {
+        <div
+          className="board"
+          style={{
+            height: currentCards?.length > 0 ? "auto" : 0,
+          }}
+        >
           <div>
             <div className="optional-cards">
               {optionalCards && (
-                <div>
+                <div className={game.constructor.name}>
                   {optionalCards.map((ch, i) => {
                     if (true || !ch.completed)
                       return (
@@ -84,15 +88,17 @@ export default function Board({ hero, removeHero, game }) {
               <FeaturedImage hero={hero} game={game} />
             </div>
           </div>
-          <div className="currentCards">
-            {currentCards.map((ch, i) => {
-              return (
-                <div className="letterCard" key={i}>
-                  {ch}
-                </div>
-              );
-            })}
-          </div>
+          {currentCards && (
+            <div className="currentCards">
+              {currentCards.map((ch, i) => {
+                return (
+                  <div className="letterCard" key={i}>
+                    {ch}
+                  </div>
+                );
+              })}
+            </div>
+          )}
           <div className="next-step">
             {completeBoard && (
               <img
@@ -106,7 +112,7 @@ export default function Board({ hero, removeHero, game }) {
             )}
           </div>
         </div>
-      )}
+      }
     </div>
   );
 }
