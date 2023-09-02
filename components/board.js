@@ -38,6 +38,8 @@ export default function Board({ hero, removeHero, game }) {
     }
     fetchData();
   }, [hero.hebrew]);
+  console.log("game=", game);
+  console.log("game.constructor.name=", game.constructor.name);
   const handleClickLetter = (userSelectedCardIndex) => {
     const checkMove = game.checkMove(
       optionalCards,
