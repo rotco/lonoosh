@@ -6,10 +6,18 @@ import "../styles/App.css";
 function MyApp({ Component, pageProps }) {
   const [scoreContext, setScoreContext] = useState(0);
   const [actionContext, setActionContext] = useState(null);
+  const [gameContext, setGameContext] = useState(null);
 
   return (
     <AppContext.Provider
-      value={{ scoreContext, setScoreContext, actionContext, setActionContext }}
+      value={{
+        scoreContext,
+        setScoreContext,
+        actionContext,
+        setActionContext,
+        gameContext,
+        setGameContext,
+      }}
     >
       <Component {...pageProps} />
     </AppContext.Provider>

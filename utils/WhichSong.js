@@ -3,22 +3,6 @@ import Category from "../models/Category";
 // import Hero from "../models/Hero";
 import dbConnect from "./dbConnect";
 
-const allChars = "אבגדהוזחטיכךלמםנןסעפףצץקרשת";
-const allSentences = [
-  "החיים שלנו תותים",
-  "סיבת הסיבות",
-  "אין עולם",
-  "קרן שמש",
-  "שבוע טוב",
-  "פנתרה",
-  "בית משוגעים",
-  "מלכת השושנים",
-  "כמה אני אוהב אותך",
-  "אפס מאמץ",
-  "אלף כבאים",
-  "בחור אנלוגי בעולם דיגיטלי",
-];
-
 export class WhichSong extends Game {
   constructor(heros) {
     super();

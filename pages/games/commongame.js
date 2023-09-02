@@ -1,12 +1,9 @@
 import styles from "../../styles/Home.module.css";
 import Score from "../../components/Score";
 import Board from "../../components/Board";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import AppContext from "../../components/AppContext";
 import WinningVideo from "../../components/winningVideo";
-import SayName from "../../components/SayName";
-import ReactHowler from "react-howler";
-import { display } from "@mui/system";
-import axios from "axios";
 import { ShuffledCharacters } from "../../utils/ShuffledCharacters";
 import { MissingCharacters } from "../../utils/MissingCharacters";
 import { MissingVowel } from "../../utils/MissingVowel";
@@ -16,8 +13,10 @@ import PageHead from "../../components/PageHead";
 function Home({ data }) {
   const [hero, setHero] = useState(null);
   const [game, setGame] = useState(null);
+  const [gameObj, setGameObj] = useState(null);
   const [origCollection, setOrigCollection] = useState(null);
 
+  const context = useContext(AppContext);
   const chooseHero = (tempGame) => {
     const rand = Math.round(Math.random() * (data.collection.length - 1));
     const choosen = data.collection[rand];
@@ -39,6 +38,7 @@ function Home({ data }) {
 
   useEffect(() => {
     const tempGame = getGame(data.gameName);
+    setGameObj(context.gameContext);
     setGame(tempGame);
     chooseHero(tempGame);
     setOrigCollection(JSON.parse(JSON.stringify(data.collection)));
@@ -69,6 +69,8 @@ function Home({ data }) {
           <Score />
         </div>
       </div>
+      {gameObj && <div className="label scoreLabel">{gameObj.hebrew}</div>}
+
       <WinningVideo />
 
       {hero && (

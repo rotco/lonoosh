@@ -1,8 +1,8 @@
 import styles from "../styles/Home.module.css";
 import Score from "../components/Score";
 import Board from "../components/Board";
-
-import { useState, useEffect, useCallback } from "react";
+import AppContext from "../components/AppContext";
+import { useState, useEffect, useCallback, useContext } from "react";
 import WinningVideo from "../components/winningVideo";
 import SayName from "../components/SayName";
 import CampaignIcon from "@mui/icons-material/Campaign";
@@ -16,7 +16,11 @@ import PageHead from "../components/PageHead";
 
 function Home({ data }) {
   const [games, setGames] = useState([]);
+  const context = useContext(AppContext);
 
+  const handleChooseGame = (game) => {
+    context.setGameContext(game);
+  };
   useEffect(() => {
     setGames(data);
   }, [games, data]);
@@ -32,20 +36,23 @@ function Home({ data }) {
               return (
                 <div key={index} className="game-card">
                   <Link
+                    legacyBehavior
                     href={{
                       pathname: "/games/commongame",
                       query: { endpoint: game.endpoint },
                     }}
                   >
-                    <Image
-                      src={"/assets/images/" + game.imageurl}
-                      width={300}
-                      height={300}
-                      alt="game"
-                    ></Image>
-                    <div className="label" style={{ font: "1.5rem" }}>
-                      {game.hebrew}
-                    </div>
+                    <a onClick={handleChooseGame.bind(null, game)}>
+                      <Image
+                        src={"/assets/images/" + game.imageurl}
+                        width={300}
+                        height={300}
+                        alt="game"
+                      ></Image>
+                      <div className="label" style={{ font: "1.5rem" }}>
+                        {game.hebrew}
+                      </div>
+                    </a>
                   </Link>
                 </div>
               );
