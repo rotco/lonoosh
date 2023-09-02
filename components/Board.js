@@ -9,6 +9,7 @@ export default function Board({ hero, removeHero, game }) {
   const [optionalCards, setOptionalCards] = useState(null);
   const [requiredCard, setRequiredCard] = useState(null);
   const [completeBoard, setCompleteBoard] = useState(false);
+  const [getClassName, setClassName] = useState(false);
   const context = useContext(AppContext);
   const [playBad] = useSound("/assets/sounds/step_bad.mp3");
   const [playGood] = useSound("/assets/sounds/step_good.mp3");
@@ -35,11 +36,11 @@ export default function Board({ hero, removeHero, game }) {
       setCurrentCards(tempCurrentCards);
       setOptionalCards(optional);
       setRequiredCard(required);
+      setClassName(required?.length > 3 ? "shortHeight" : "");
+      console.log("required.length", required.length);
     }
     fetchData();
   }, [hero.hebrew]);
-  console.log("game=", game);
-  console.log("game.constructor.name=", game.constructor.name);
   const handleClickLetter = (userSelectedCardIndex) => {
     const checkMove = game.checkMove(
       optionalCards,
@@ -70,7 +71,7 @@ export default function Board({ hero, removeHero, game }) {
           <div>
             <div className="optional-cards">
               {optionalCards && (
-                <div className={game.constructor.name}>
+                <div className={getClassName}>
                   {optionalCards.map((ch, i) => {
                     if (true || !ch.completed)
                       return (
