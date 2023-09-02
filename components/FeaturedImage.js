@@ -31,7 +31,14 @@ export default function FeaturedImage({ hero, game }) {
           />
         </IconButton>
       )}
-      <Image src={hero.imageurl} height={400} width={400} alt="hero" />
+      <img
+        src={hero.imageurl}
+        alt="hero"
+        style={{
+          maxWidth: "400px", // Set the maximum width to 100% of its container
+          height: "auto", // Allow the height to adjust proportionally based on width
+        }}
+      />
       {runSayName && (
         <SayName
           audioFile={hero.audioFile}

@@ -1,6 +1,5 @@
 import { Game } from "./game";
 import Category from "../models/Category";
-// import Hero from "../models/Hero";
 import dbConnect from "./dbConnect";
 
 export class WhichSong extends Game {
